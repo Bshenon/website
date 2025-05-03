@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guess the Number</title>
+  <style>
+    body {
+      font-family: 'Press Start 2P', monospace;
+      background: #1a1a1a;
+      color: #00ffcc;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .input-section {
+      margin-top: 2rem;
+    }
+
+    input[type="number"] {
+      font-family: inherit;
+      padding: 1rem;
+      font-size: 1.2rem;
+      width: 80px;
+      text-align: center;
+      background: #000;
+      color: #00ffcc;
+      border: 2px dashed #ff0080;
+    }
+
+    button {
+      font-family: inherit;
+      padding: 1rem;
+      margin-left: 1rem;
+      font-size: 1.2rem;
+      background: #000;
+      color: #ff0080;
+      border: 2px dashed #ff0080;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ff0080;
+      color: #000;
+    }
+
+    #result {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 Guess the Number</h1>
+  <p>I'm thinking of a number between 1 and 100. Can you guess it?</p>
+  <div class="input-section">
+    <input type="number" id="userGuess" min="1" max="100" />
+    <button onclick="checkGuess()">Guess</button>
+  </div>
+  <div id="result"></div>
+
+  <script>
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+
+    function checkGuess() {
+      const userGuess = parseInt(document.getElementById('userGuess').value);
+      const resultDiv = document.getElementById('result');
+      attempts++;
+
+      if (userGuess === randomNumber) {
+        resultDiv.innerHTML = `
+          <p>🎉 Congrats! You guessed the number in ${attempts} attempts!</p>
+          <button onclick="restartGame()">Play Again</button>
+        `;
+      } else if (userGuess < randomNumber) {
+        resultDiv.innerHTML = `<p>🔼 Too low! Try again.</p>`;
+      } else if (userGuess > randomNumber) {
+        resultDiv.innerHTML = `<p>🔽 Too high! Try again.</p>`;
+      } else {
+        resultDiv.innerHTML = `<p>❌ Please enter a valid number.</p>`;
+      }
+    }
+
+    function restartGame() {
+      attempts = 0;
+      document.getElementById('userGuess').value = '';
+      document.getElementById('result').innerHTML = '';
+    }
+  </script>
+</body>
+</html>
